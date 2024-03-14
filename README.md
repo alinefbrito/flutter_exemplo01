@@ -64,3 +64,4 @@ Resultado:
 
 Para outras opções de design: [AppBar Flutter](https://howtoflutter.dev/widgets/appbar/)
 
+Os elementos do corpo do app foram comentados no arquivo  [Main.dart](lib/main.dart)
