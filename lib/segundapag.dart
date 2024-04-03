@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:exemplo01/main.dart';
 
 void segundapag() {
   runApp(const SegundaPag());
@@ -11,17 +10,22 @@ class SegundaPag extends StatelessWidget {
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Segunda Tela'),
+      appBar:  AppBar(
+        title:const  Text('Segunda Tela'),
+        backgroundColor:const  Color.fromARGB(255, 8, 148, 148),
       ),
-      body: Center(
-        child: ElevatedButton(
+      body: Center(child: Column(children:
+      [const Text("Dados Recebidos"),
+      Image.asset(
+      'img/img02.jpg',width: 220,height: 220,),
+  
+         ElevatedButton(
           onPressed: () {
-            // Botão que voltará ´para a tela anterior
+            Navigator.pop(context);
           },
           child: const Text('Voltar!'),
         ),
-      ),
-    );
+     ] ),
+    ));
   }
 }

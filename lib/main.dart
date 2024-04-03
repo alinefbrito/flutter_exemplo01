@@ -3,7 +3,8 @@ import 'package:exemplo01/segundapag.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MaterialApp (title: "App",
+      home: MainApp(),));
 }
 
 class MainApp extends StatelessWidget {
@@ -49,7 +50,9 @@ class MainApp extends StatelessWidget {
               //o const é solicitado ´pois ainda não há tratamento
               const TextField(
               decoration:  InputDecoration(
+                
               icon: Icon(Icons.phone),
+              //inclui uma borda no elemento
               border: OutlineInputBorder(),
               hintText: 'Informe um Telefone',
               labelText: 'Telefone'
