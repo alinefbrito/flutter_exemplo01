@@ -1,9 +1,10 @@
-import 'dart:io';
 
+import 'package:exemplo01/segundapag.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MaterialApp (title: "App",
+      home: MainApp(),));
 }
 
 class MainApp extends StatelessWidget {
@@ -36,33 +37,42 @@ class MainApp extends StatelessWidget {
            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
            children:<Widget>[ 
             const Text('Texto simples'),
+            //TextFormField é um texto para entrada de dados 
+            //Pode ser decoradpo para ficar mais bonito visualmente
             TextFormField(
                 decoration: const InputDecoration(
                   icon:  Icon(Icons.person),
                   hintText: 'Entrada de texto',
-                  labelText: 'Name',
+                  labelText: 'Nome',
                   
                 ),
               ),
-              //o const é solicitado ´pois aoinda não há tratamento
+              //o const é solicitado ´pois ainda não há tratamento
               const TextField(
               decoration:  InputDecoration(
+                
               icon: Icon(Icons.phone),
+              //inclui uma borda no elemento
               border: OutlineInputBorder(),
-              hintText: 'Enter a search term',
+              hintText: 'Informe um Telefone',
+              labelText: 'Telefone'
+              
             ),
           ),
           
           //ambos os Text tem funcionalidades similares,
           //o FormField disponibiliza mais recursos
-          ElevatedButton(onPressed:(){}, 
+          ElevatedButton(onPressed:(){
+             Navigator.push(
+                    context,
+                    MaterialPageRoute(builder:
+                       (context) => const SegundaPag()),
+                         );
+          }, //botão irá enviar para página dois
                         child: const Text('Enviar')),
-          Image(
-    image: FileImage(
-      File('img/img01.jpg'),
-      scale: 0.5
-    ),
-  ),
+         Image.asset(
+      'img/img01.jpg',width: 220,height: 220,),
+  
                
       
             ]
