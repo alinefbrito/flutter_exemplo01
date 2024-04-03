@@ -4,7 +4,7 @@
 
 https://github.com/alinefbrito/flutter_exemplo01/wiki
 
-#Branches
+# Branches
 *Main: Versão completa mais atualizada do projeto
 * Aula01: Configurações iniciais e Widgets
 * Aula02: Navegação simples e melhorias
