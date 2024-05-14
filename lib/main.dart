@@ -1,15 +1,39 @@
 
 import 'package:exemplo01/segundapag.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+ class Pessoa
+ {
+  final String nome;
+  final String tel;
+  //construtor
+  const Pessoa( this.nome, this.tel);
+ }
 void main() {
-  runApp(const MaterialApp (title: "App",
+  runApp( const MaterialApp (title: "App",
       home: MainApp(),));
 }
 
-class MainApp extends StatelessWidget {
+// O construtor será alterado para utilizarmos Stateful
+//class MainApp extends StatelessWidget {
+//  const MainApp({super.key});
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
+
+  @override
+  MainAPP createState() => MainAPP();
+}
+
+class MainAPP extends State<MainApp> {
+//variaveis locais para receber o texto
+String nme = '';
+String fone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    }
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
@@ -36,7 +60,7 @@ class MainApp extends StatelessWidget {
            //com distribuição uniforme
            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
            children:<Widget>[ 
-            const Text('Texto simples'),
+            const Text('Exemplo de Formulário'),
             //TextFormField é um texto para entrada de dados 
             //Pode ser decoradpo para ficar mais bonito visualmente
             TextFormField(
@@ -44,12 +68,22 @@ class MainApp extends StatelessWidget {
                   icon:  Icon(Icons.person),
                   hintText: 'Entrada de texto',
                   labelText: 'Nome',
+                  border: OutlineInputBorder(),
+                  
                   
                 ),
+                  keyboardType: TextInputType.name,
+                   inputFormatters: <TextInputFormatter>[
+                       FilteringTextInputFormatter.singleLineFormatter
+                    ],
+                 //associa o valor do campo à variável
+                 onChanged: (value) {
+                            nme = value;
+                          },
               ),
               //o const é solicitado ´pois ainda não há tratamento
-              const TextField(
-              decoration:  InputDecoration(
+               TextFormField(
+              decoration:  const InputDecoration(
                 
               icon: Icon(Icons.phone),
               //inclui uma borda no elemento
@@ -58,15 +92,30 @@ class MainApp extends StatelessWidget {
               labelText: 'Telefone'
               
             ),
+              keyboardType: TextInputType.phone,
+                inputFormatters: <TextInputFormatter>[
+                 FilteringTextInputFormatter.digitsOnly
+              ],
+             onChanged: (value) {
+                            fone = value;
+                          },
           ),
           
           //ambos os Text tem funcionalidades similares,
           //o FormField disponibiliza mais recursos
           ElevatedButton(onPressed:(){
+            
+            Pessoa p =  Pessoa(nme, fone);
+
              Navigator.push(
                     context,
                     MaterialPageRoute(builder:
-                       (context) => const SegundaPag()),
+                       (context) => const SegundaPag(),
+                       //adiciona os parametros 
+                       settings: RouteSettings(
+                    arguments: p,
+                  ),),
+                        
                          );
           }, //botão irá enviar para página dois
                         child: const Text('Enviar')),
