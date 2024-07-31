@@ -25,6 +25,7 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAPP extends State<MainApp> {
+ //cria um controlador que permite ir ao fim da lista(listview)
  final ScrollController _controller = ScrollController();
     void _scrollDown() {
   _controller.animateTo(
@@ -104,6 +105,7 @@ _scrollDown();
                             nme = value;
                           },
               ),
+              //adiciona um espaço para melhorar o layout
               const SizedBox(height: 10,),
               //o const é solicitado ´pois ainda não há tratamento
                TextFormField(
@@ -131,6 +133,7 @@ _scrollDown();
          Image.asset(  'img/puppy.jpg',width: 120,height: 120,),
           ElevatedButton(onPressed:addLista, //botão irá enviar para página dois
                         child: const Text('Add pet')),
+        //ajusta o listview para utilizar o espaço  sem estourar o tamanho
         Expanded(
             child:ListView.builder(
          itemCount: pets.length,
