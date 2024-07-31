@@ -1,4 +1,3 @@
-import 'package:exemplo01/main.dart';
 import 'package:exemplo01/pet.dart';
 import 'package:flutter/material.dart';
 

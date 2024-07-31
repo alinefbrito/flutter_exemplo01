@@ -1,13 +1,13 @@
 
 
 
-import 'dart:html';
+
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:exemplo01/segundapag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
  import 'package:exemplo01/pet.dart';
-import 'package:flutter/widgets.dart';
 void main() {
   runApp( const MaterialApp (title: "App",
       home: MainApp(),));
@@ -25,7 +25,14 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAPP extends State<MainApp> {
-
+ final ScrollController _controller = ScrollController();
+    void _scrollDown() {
+  _controller.animateTo(
+    _controller.position.maxScrollExtent,
+    duration: const Duration(seconds: 1),
+    curve: Curves.fastOutSlowIn,
+  );
+}
 
 //lista pets
 List<Pet> pets =List.generate(5, (i) => Pet('Pet $i',  
@@ -40,6 +47,7 @@ addLista()
 Pet p =  Pet(nme, DateTime.parse( nasc.split('/').reversed.join()), 'img/puppy.jpg');
 
 setState(() =>pets.add(p));
+_scrollDown();
 
 }
 
@@ -48,10 +56,16 @@ setState(() =>pets.add(p));
   void initState() {
     super.initState();
     }
+
+   
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: Scaffold(
+      home: Scaffold(resizeToAvoidBottomInset: true,
+         floatingActionButton: FloatingActionButton.small(
+      onPressed:_scrollDown,
+      child: const Icon(Icons.arrow_downward_sharp,),
+    ),
         appBar: AppBar(
           //define o titulo da app
               title: const Text('Meu Pet'),
@@ -63,11 +77,11 @@ setState(() =>pets.add(p));
                
                 ),
         body:  Center(
-          child:Padding(padding:const EdgeInsets.all(10.5) ,
+          child:Padding(padding:const EdgeInsets.all(8.5) ,
           child:Column(
            //Alinha no centro da página - vertical - , 
            //com distribuição uniforme
-           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
            children:<Widget>[ 
             const Text('Cadastro Pet'),
             //TextFormField é um texto para entrada de dados 
@@ -90,6 +104,7 @@ setState(() =>pets.add(p));
                             nme = value;
                           },
               ),
+              const SizedBox(height: 10,),
               //o const é solicitado ´pois ainda não há tratamento
                TextFormField(
               decoration:  const InputDecoration(
@@ -116,13 +131,15 @@ setState(() =>pets.add(p));
          Image.asset(  'img/puppy.jpg',width: 120,height: 120,),
           ElevatedButton(onPressed:addLista, //botão irá enviar para página dois
                         child: const Text('Add pet')),
-      
-      ListView.builder(
+        Expanded(
+            child:ListView.builder(
          itemCount: pets.length,
          shrinkWrap: true,
         padding: const EdgeInsets.all(5),
         scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext, index){
+        controller: _controller,
+        clipBehavior: Clip.antiAlias,
+        itemBuilder: (BuildContext ctx, index){
           return Card( 
             child: ListTile(
               leading: CircleAvatar(backgroundImage: AssetImage(pets[index].pathimg),),
@@ -142,7 +159,7 @@ setState(() =>pets.add(p));
             ),
           ) ;
         },
-                )
+                ))
   
                
       

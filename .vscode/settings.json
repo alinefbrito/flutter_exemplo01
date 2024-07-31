@@ -1,4 +1,5 @@
 {
     "debug.console.fontFamily": "CaskaydiaCove Nerd Font Mono",
-    "terminal.integrated.localEchoStyle": "dim"
+    "terminal.integrated.localEchoStyle": "dim",
+    "dart.sdkPath": null
 }
