@@ -4,6 +4,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:exemplo01/navegacaoexterna.dart';
 import 'package:exemplo01/segundapag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -74,6 +75,22 @@ _scrollDown();
               centerTitle: true,
               //muda a cor do background
                backgroundColor: Colors.pink.shade400,
+               leading: 
+               IconButton(onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder:
+                       (context) => const NavegPag(),
+                       //adiciona os parametros 
+                       ),
+                        
+                         );
+               } , icon:const Icon(Icons.navigate_next_sharp),),
+               //inclui os botões após o título
+                actions: [
+                  IconButton(onPressed: () {} , icon:const Icon(Icons.dining) ),
+                  IconButton(onPressed: () {} , icon:const Icon(Icons.no_food) ),
+                ],
                //adicionar botões de ação antes do título
                
                 ),
