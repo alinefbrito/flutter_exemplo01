@@ -32,14 +32,21 @@ class MainAPP extends State<MainApp> {
   _controller.animateTo(
     _controller.position.maxScrollExtent,
     duration: const Duration(seconds: 1),
-    curve: Curves.fastOutSlowIn,
+    curve: Curves.fastOutSlowIn
+    ,
   );
 }
 
 //lista pets
-List<Pet> pets =List.generate(5, (i) => Pet('Pet $i',  
-                                          DateTime(2010,10,11), 
-                                          'img/list/$i.gif'));
+//List<Pet> pets =List.generate(5, (i) => Pet('Pet $i',  
+                                          //DateTime(2010,10,11),  'img/list/$i.gif'));
+ 
+ List<Pet> pets = [Pet('pet 1', DateTime(2024,03,10), 'img/list/0.gif' ),
+                    Pet('pet 2', DateTime(2024,05,01), 'img/list/1.gif'),
+                    Pet('pet 3', DateTime(2024,05,01), 'img/list/2.gif'),
+                    Pet('pet 4', DateTime(2024,05,01), 'img/list/3.gif'),
+                    Pet('pet 5', DateTime(2024,05,01), 'img/list/4.gif'),
+                    Pet('pet 6', DateTime(2024,05,01), 'img/list/5.gif')];                                      
 //variaveis locais para receber o texto
 String nme = '';
 String nasc  = '';

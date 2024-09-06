@@ -8,7 +8,9 @@ void navegpag() {
 
 class NavegPag extends StatelessWidget {
   const NavegPag({super.key});
-
+//Adicionar a referência do Pacote no pubspec
+//Página da Documentação: https://pub.dev/packages/url_launcher
+//Future/async: método assíncrono, a execução do mesmo não interronpe o processamento da aplicação
 Future<void> _launchURL() async {
    final Uri url = Uri.parse('https://masp.org.br/');
    if (!await launchUrl(url)) {
