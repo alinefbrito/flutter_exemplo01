@@ -5,7 +5,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:exemplo01/navegacaoexterna.dart';
-import 'package:exemplo01/segundapag.dart';
+import 'package:exemplo01/segunda_pag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
  import 'package:exemplo01/pet.dart';
