@@ -1,5 +1,5 @@
 name: exemplo01
-description: "A new Flutter project."
+description: "Projeto para exemplificar os principais conceitos e estruturas Flutter."
 publish_to: 'none'
 version: 0.1.0
 
@@ -10,10 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.3.0
-<<<<<<< HEAD
-
-=======
->>>>>>> Aula06---navegexterna
 dev_dependencies:
   flutter_test:
     sdk: flutter
