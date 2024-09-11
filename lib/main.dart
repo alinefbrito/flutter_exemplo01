@@ -135,7 +135,7 @@ _scrollDown();
                TextFormField(
               decoration:  const InputDecoration(
                 
-              icon: Icon(Icons.phone),
+              icon: Icon(Icons.edit_calendar),
               //inclui uma borda no elemento
               border: OutlineInputBorder(),
               hintText: 'Informe a data de nascimento aproximada do seu Pet',
@@ -159,7 +159,9 @@ _scrollDown();
                         child: const Text('Add pet')),
         //ajusta o listview para utilizar o espaço  sem estourar o tamanho
         Expanded(
+          //inicia o construtor do list view
             child:ListView.builder(
+              //define o tamanho do listview a partir do tamanho da lista
          itemCount: pets.length,
          shrinkWrap: true,
         padding: const EdgeInsets.all(5),
@@ -171,7 +173,7 @@ _scrollDown();
             child: ListTile(
               leading: CircleAvatar(backgroundImage: AssetImage(pets[index].pathimg),),
               title: Text(pets[index].nome),
-              subtitle: Text(pets[index].nascimento.toString()),
+              subtitle: Text(pets[index].dataNascFormatada().toString()),
               onTap: () =>  Navigator.push(
                     context,
                     MaterialPageRoute(builder:

@@ -19,7 +19,8 @@ class SegundaPag extends StatelessWidget {
       body: Center(child: Column(children:
       [const Text("Dados Recebidos"),
       Text(pet.nome),
-      Text((pet.nascimento).toString() ),
+      Text(pet.dataNascFormatada() ),
+      Text(pet.calcIdade().toString()),
       Image.asset(
       pet.pathimg,width: 220,height: 220,),
   

@@ -14,12 +14,21 @@ class Pet
       return 'x';
     }
 
-  int calcIdade(int idade){
-    int i = idade;
-    return i;
+  int calcIdade(){
+    final hoje = DateTime.now();
+    idade = hoje.difference(nascimento).inDays;
+    idade = (idade/365).round();
+    
+    return idade;
   }
-  calcula()
-  {
-    idade = 5;
+  String dataNascFormatada()
+  { 
+    //sepsara a data em um vetor
+    final dt = nascimento.toString().split(' ');
+   //pega apenas a parte da data e descosidera a hora e separa em um novo vetor 
+    //escreve o vetor de trás pra frente( dd/mm/aaaa) e junta novamente
+    final d = dt[0].split('-').reversed.join('/');
+    
+    return d;
   }
  }
