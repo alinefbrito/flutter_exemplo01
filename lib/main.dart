@@ -6,6 +6,7 @@
 
 import 'package:exemplo01/navegacaoexterna.dart';
 import 'package:exemplo01/segunda_pag.dart';
+import 'package:exemplo01/sensores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
  import 'package:exemplo01/pet.dart';
@@ -95,7 +96,16 @@ _scrollDown();
                } , icon:const Icon(Icons.navigate_next_sharp),),
                //inclui os botões após o título
                 actions: [
-                  IconButton(onPressed: () {} , icon:const Icon(Icons.dining) ),
+                  IconButton(onPressed: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder:
+                       (context) => const Sensores(),
+                       //adiciona os parametros 
+                       ),
+                        
+                         );
+                  } , icon:const Icon(Icons.dining) ),
                   IconButton(onPressed: () {} , icon:const Icon(Icons.no_food) ),
                 ],
                //adicionar botões de ação antes do título

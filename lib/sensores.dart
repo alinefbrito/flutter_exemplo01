@@ -4,11 +4,12 @@
 
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:async';
+
 import 'package:exemplo01/navegacaoexterna.dart';
-import 'package:exemplo01/segundapag.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
- import 'package:exemplo01/pet.dart';
+ import 'package:flutter_sensors/flutter_sensors.dart';
 void sensores() {
  runApp(const Sensores());
 }
@@ -35,28 +36,102 @@ class SensoresAPP extends State<Sensores> {
   );
 }
 
-//lista pets
-List<Pet> pets =List.generate(5, (i) => Pet('Pet $i',  
-                                          DateTime(2010,10,11), 
-                                          'img/list/$i.gif'));
-//variaveis locais para receber o texto
-String nme = '';
-String nasc  = '';
 
-addLista()
-{
-Pet p =  Pet(nme, DateTime.parse( nasc.split('/').reversed.join()), 'img/puppy.jpg');
+bool _accelAvailable = false;
+  bool _gyroAvailable = false;
+  List<double> _accelData = List.filled(3, 0.0);
+  List<double> _gyroData = List.filled(3, 0.0);
+  StreamSubscription? _accelSubscription;
+  StreamSubscription? _gyroSubscription;
 
-setState(() =>pets.add(p));
-_scrollDown();
-
-}
-
-
+List<int> sensoresdisponiveis=List.empty();
   @override
   void initState() {
+    //_checkAccelerometerStatus();
+   // _checkGyroscopeStatus();
+   _checkAllSensors();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _stopAccelerometer();
+    _stopGyroscope();
+    super.dispose();
+  }
+
+  void _checkAllSensors() async{
+    for (var i = 0; i < 20; i++) {
+      await SensorManager()
+        .isSensorAvailable(i)
+        .then((result) {
+      setState(() {
+        sensoresdisponiveis.add(i);
+        
+      });
+    });
     }
+  }
+
+  void _checkAccelerometerStatus() async {
+    await SensorManager()
+        .isSensorAvailable(Sensors.ACCELEROMETER)
+        .then((result) {
+      setState(() {
+        _accelAvailable = result;
+        
+      });
+    });
+  }
+
+  Future<void> _startAccelerometer() async {
+    if (_accelSubscription != null) return;
+    if (_accelAvailable) {
+      final stream = await SensorManager().sensorUpdates(
+        sensorId: Sensors.ACCELEROMETER,
+        interval: Sensors.SENSOR_DELAY_FASTEST,
+      );
+      _accelSubscription = stream.listen((sensorEvent) {
+        setState(() {
+          _accelData = sensorEvent.data;
+        });
+      });
+    }
+  }
+
+  void _stopAccelerometer() {
+    if (_accelSubscription == null) return;
+    _accelSubscription?.cancel();
+    _accelSubscription = null;
+  }
+
+  void _checkGyroscopeStatus() async {
+    await SensorManager().isSensorAvailable(Sensors.GYROSCOPE).then((result) {
+      setState(() {
+        _gyroAvailable = result;
+      });
+    });
+  }
+
+  Future<void> _startGyroscope() async {
+    if (_gyroSubscription != null) return;
+    if (_gyroAvailable) {
+      final stream =
+          await SensorManager().sensorUpdates(sensorId: Sensors.GYROSCOPE);
+      _gyroSubscription = stream.listen((sensorEvent) {
+        setState(() {
+          _gyroData = sensorEvent.data;
+        });
+      });
+    }
+  }
+
+  void _stopGyroscope() {
+    if (_gyroSubscription == null) return;
+    _gyroSubscription?.cancel();
+    _gyroSubscription = null;
+  }
+
 
    
   @override
@@ -100,88 +175,23 @@ _scrollDown();
            //com distribuição uniforme
            mainAxisAlignment: MainAxisAlignment.spaceAround,
            children:<Widget>[ 
-            const Text('Cadastro Pet'),
-            //TextFormField é um texto para entrada de dados 
-            //Pode ser decoradpo para ficar mais bonito visualmente
-            TextFormField(
-                decoration: const InputDecoration(
-                  icon:  Icon(Icons.person),
-                  hintText: 'Nome do Seu Pet',
-                  labelText: 'Nome',
-                  border: OutlineInputBorder(),
-                  
-                  
-                ),
-                  keyboardType: TextInputType.name,
-                   inputFormatters: <TextInputFormatter>[
-                       FilteringTextInputFormatter.singleLineFormatter
-                    ],
-                 //associa o valor do campo à variável
-                 onChanged: (value) {
-                            nme = value;
-                          },
-              ),
-              //adiciona um espaço para melhorar o layout
-              const SizedBox(height: 10,),
-              //o const é solicitado ´pois ainda não há tratamento
-               TextFormField(
-              decoration:  const InputDecoration(
-                
-              icon: Icon(Icons.phone),
-              //inclui uma borda no elemento
-              border: OutlineInputBorder(),
-              hintText: 'Informe a data de nascimento aproximada do seu Pet',
-              labelText: 'Nascimento'
-              
-            ),
-              keyboardType: TextInputType.datetime,
-                inputFormatters: [
-    FilteringTextInputFormatter.allow(RegExp("[0-9/]"),replacementString: ''),
-  ],
-             onChanged: (value) {
-                            nasc = value ;
-                          },
-          ),
-          
-          //ambos os Text tem funcionalidades similares,
-          //o FormField disponibiliza mais recursos
-         
+            
          Image.asset(  'img/puppy.jpg',width: 120,height: 120,),
-          ElevatedButton(onPressed:addLista, //botão irá enviar para página dois
-                        child: const Text('Add pet')),
+          
         //ajusta o listview para utilizar o espaço  sem estourar o tamanho
-        Expanded(
-            child:ListView.builder(
-         itemCount: pets.length,
+                     
+      ListView.builder(
+              //define o tamanho do listview a partir do tamanho da lista
+         itemCount: sensoresdisponiveis.length,
          shrinkWrap: true,
         padding: const EdgeInsets.all(5),
         scrollDirection: Axis.vertical,
         controller: _controller,
         clipBehavior: Clip.antiAlias,
         itemBuilder: (BuildContext ctx, index){
-          return Card( 
-            child: ListTile(
-              leading: CircleAvatar(backgroundImage: AssetImage(pets[index].pathimg),),
-              title: Text(pets[index].nome),
-              subtitle: Text(pets[index].nascimento.toString()),
-              onTap: () =>  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder:
-                       (context) => const SegundaPag(),
-                       //adiciona os parametros 
-                       settings: RouteSettings(
-                    arguments:pets[index],
-                  ),),
-                        
-                         ),
-              
-            ),
-          ) ;
+          return Text(sensoresdisponiveis[index] as String);
         },
-                ))
-  
-               
-      
+                )
             ]
           )),
       ),
