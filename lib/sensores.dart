@@ -44,12 +44,12 @@ bool _accelAvailable = false;
   StreamSubscription? _accelSubscription;
   StreamSubscription? _gyroSubscription;
 
-List<int> sensoresdisponiveis=List.empty();
+//List<int> sensoresdisponiveis=List.empty();
   @override
   void initState() {
-    //_checkAccelerometerStatus();
-   // _checkGyroscopeStatus();
-   _checkAllSensors();
+    _checkAccelerometerStatus();
+    _checkGyroscopeStatus();
+   //_checkAllSensors();
     super.initState();
   }
 
@@ -66,7 +66,7 @@ List<int> sensoresdisponiveis=List.empty();
         .isSensorAvailable(i)
         .then((result) {
       setState(() {
-        sensoresdisponiveis.add(i);
+        //sensoresdisponiveis.add(i);
         
       });
     });
