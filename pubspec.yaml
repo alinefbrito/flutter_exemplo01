@@ -1,5 +1,5 @@
 name: exemplo01
-description: "A new Flutter project."
+description: "Projeto para exemplificar os principais conceitos e estruturas Flutter."
 publish_to: 'none'
 version: 0.1.0
 
@@ -9,13 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  url_launcher: ^6.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
   assets:
     - img/
+    - img/list/
+    
