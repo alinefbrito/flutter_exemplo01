@@ -21,7 +21,7 @@ Future<void> _launchURL() async {
     return Scaffold(
       appBar:  AppBar(
         title:const  Text('Terceira Tela'),
-        backgroundColor:Color.fromARGB(255, 66, 2, 82),
+        backgroundColor:const Color.fromARGB(255, 66, 2, 82),
       ),
       body: Center(child: Column(children:
       [const Text("Abrir App Externa"),
